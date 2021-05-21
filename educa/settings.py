@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,17 +30,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
 # Application definition
 
 INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
+    'students.apps.StudentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
@@ -64,12 +69,18 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+           # 'libraries':{
+            #    'course': 'app.templatetags.my_templatetag',
+
+            #}
         },
     },
 ]
 
 WSGI_APPLICATION = 'educa.wsgi.application'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
